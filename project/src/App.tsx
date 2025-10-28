@@ -39,20 +39,20 @@ function AppContent() {
     if (profile.role === 'request_creator') {
       switch (currentView) {
         case 'dashboard':
-          return <CreatorDashboard />;
+          return <CreatorDashboard onViewChange={setCurrentView} />;
         case 'my-requests':
           return <MyRequestsList />;
         case 'create-request':
           return <CreateRequestWizard />;
         default:
-          return <CreatorDashboard />;
+          return <CreatorDashboard onViewChange={setCurrentView} />;
       }
     }
 
     if (profile.role === 'procurement_approver') {
       switch (currentView) {
         case 'dashboard':
-          return <ApproverDashboard />;
+          return <ApproverDashboard onViewChange={setCurrentView} />;
         case 'pending-approval':
           return <PendingApprovalList />;
         case 'active-requests':
@@ -60,20 +60,20 @@ function AppContent() {
         case 'pending-awards':
           return <PendingAwardsView />;
         default:
-          return <ApproverDashboard />;
+          return <ApproverDashboard onViewChange={setCurrentView} />;
       }
     }
 
     if (profile.role === 'supplier') {
       switch (currentView) {
         case 'dashboard':
-          return <SupplierDashboard />;
+          return <SupplierDashboard onViewChange={setCurrentView} />;
         case 'invitations':
           return <InvitationsList />;
         case 'my-proposals':
           return <AllProposalsView />;
         default:
-          return <SupplierDashboard />;
+          return <SupplierDashboard onViewChange={setCurrentView} />;
       }
     }
 

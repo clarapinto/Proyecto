@@ -21,7 +21,11 @@ interface ActivityItem {
   status: string;
 }
 
-export default function ApproverDashboard() {
+interface ApproverDashboardProps {
+  onViewChange: (view: string) => void;
+}
+
+export default function ApproverDashboard({ onViewChange }: ApproverDashboardProps) {
   const [stats, setStats] = useState<DashboardStats>({
     pendingAwards: 0,
     pendingApprovals: 0,
@@ -222,17 +226,13 @@ export default function ApproverDashboard() {
               <p className="text-sm text-red-800 mb-3">
                 Hay adjudicaciones esperando tu aprobación final. Los creadores han seleccionado proveedores ganadores y requieren tu autorización para proceder.
               </p>
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.dispatchEvent(new CustomEvent('navigate', { detail: 'pending-awards' }));
-                }}
+              <button
+                onClick={() => onViewChange('pending-awards')}
                 className="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm font-medium"
               >
                 <Award className="w-4 h-4 mr-2" />
                 Revisar Adjudicaciones Pendientes
-              </a>
+              </button>
             </div>
           </div>
         </Card>

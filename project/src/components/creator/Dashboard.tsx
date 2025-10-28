@@ -19,7 +19,11 @@ interface Activity {
   created_at: string;
 }
 
-export default function CreatorDashboard() {
+interface CreatorDashboardProps {
+  onViewChange: (view: string) => void;
+}
+
+export default function CreatorDashboard({ onViewChange }: CreatorDashboardProps) {
   const { profile } = useAuth();
   const [stats, setStats] = useState<DashboardStats>({
     total: 0,
@@ -175,7 +179,10 @@ export default function CreatorDashboard() {
             <h2 className="text-lg font-semibold text-secondary-900">Acciones Rápidas</h2>
           </div>
           <div className="space-y-3">
-            <button className="w-full text-left px-4 py-4 bg-gradient-to-r from-primary-50 to-primary-100/50 hover:from-primary-100 hover:to-primary-100 rounded-lg transition-all duration-200 group border border-primary-200/50">
+            <button
+              onClick={() => onViewChange('create-request')}
+              className="w-full text-left px-4 py-4 bg-gradient-to-r from-primary-50 to-primary-100/50 hover:from-primary-100 hover:to-primary-100 rounded-lg transition-all duration-200 group border border-primary-200/50"
+            >
               <div className="flex items-center gap-3">
                 <div className="bg-primary-600 rounded-lg p-2 group-hover:scale-110 transition-transform duration-200">
                   <Plus className="w-4 h-4 text-white" />
@@ -186,7 +193,10 @@ export default function CreatorDashboard() {
                 </div>
               </div>
             </button>
-            <button className="w-full text-left px-4 py-4 bg-secondary-50 hover:bg-secondary-100 rounded-lg transition-all duration-200 group border border-secondary-200/50">
+            <button
+              onClick={() => onViewChange('my-requests')}
+              className="w-full text-left px-4 py-4 bg-secondary-50 hover:bg-secondary-100 rounded-lg transition-all duration-200 group border border-secondary-200/50"
+            >
               <div className="flex items-center gap-3">
                 <div className="bg-secondary-600 rounded-lg p-2 group-hover:scale-110 transition-transform duration-200">
                   <Clock className="w-4 h-4 text-white" />
@@ -197,7 +207,10 @@ export default function CreatorDashboard() {
                 </div>
               </div>
             </button>
-            <button className="w-full text-left px-4 py-4 bg-secondary-50 hover:bg-secondary-100 rounded-lg transition-all duration-200 group border border-secondary-200/50">
+            <button
+              onClick={() => onViewChange('my-requests')}
+              className="w-full text-left px-4 py-4 bg-secondary-50 hover:bg-secondary-100 rounded-lg transition-all duration-200 group border border-secondary-200/50"
+            >
               <div className="flex items-center gap-3">
                 <div className="bg-secondary-600 rounded-lg p-2 group-hover:scale-110 transition-transform duration-200">
                   <Eye className="w-4 h-4 text-white" />

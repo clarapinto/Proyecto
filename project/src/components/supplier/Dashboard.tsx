@@ -19,7 +19,11 @@ interface Activity {
   created_at: string;
 }
 
-export default function SupplierDashboard() {
+interface SupplierDashboardProps {
+  onViewChange: (view: string) => void;
+}
+
+export default function SupplierDashboard({ onViewChange }: SupplierDashboardProps) {
   const { profile } = useAuth();
   const [stats, setStats] = useState<DashboardStats>({
     activeInvitations: 0,
@@ -185,32 +189,36 @@ export default function SupplierDashboard() {
         </Card>
 
         <Card className="p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Métricas de Desempeño</h2>
-          <div className="space-y-4">
-            <div>
-              <div className="flex justify-between mb-1">
-                <span className="text-sm text-gray-600">Tasa de Éxito</span>
-                <span className="text-sm font-semibold text-gray-900">62.5%</span>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Acciones Rápidas</h2>
+          <div className="space-y-3">
+            <button
+              onClick={() => onViewChange('invitations')}
+              className="w-full text-left px-4 py-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors group border border-blue-200"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="bg-blue-500 rounded-lg p-2 group-hover:scale-110 transition-transform">
+                  <FileText className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">Ver Invitaciones</p>
+                  <p className="text-xs text-gray-600">Revisar nuevas oportunidades</p>
+                </div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-green-600 h-2 rounded-full" style={{ width: '62.5%' }}></div>
+            </button>
+            <button
+              onClick={() => onViewChange('my-proposals')}
+              className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors group border border-gray-200"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="bg-gray-600 rounded-lg p-2 group-hover:scale-110 transition-transform">
+                  <CheckCircle className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">Mis Propuestas</p>
+                  <p className="text-xs text-gray-600">Ver estado de propuestas</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <div className="flex justify-between mb-1">
-                <span className="text-sm text-gray-600">Tasa de Respuesta</span>
-                <span className="text-sm font-semibold text-gray-900">95%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: '95%' }}></div>
-              </div>
-            </div>
-            <div className="pt-4 border-t border-gray-200">
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Total Adjudicaciones</span>
-                <span className="text-xl font-bold text-gray-900">$245,000</span>
-              </div>
-            </div>
+            </button>
           </div>
         </Card>
       </div>

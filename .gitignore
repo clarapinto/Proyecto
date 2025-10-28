@@ -1,0 +1,13 @@
+# mono-repo con app en ./project
+project/node_modules
+project/dist
+project/.env
+project/.env*.local
+
+# comunes
+node_modules
+dist
+.env
+.env*.local
+.vscode
+.DS_Store

@@ -54,7 +54,7 @@ export default function PendingApprovalList() {
       const { error: updateError } = await supabase
         .from('requests')
         .update({
-          status: 'active',
+          status: 'approved',
           approved_by: profile!.id,
           approved_at: new Date().toISOString(),
           approval_comments: comments || null,
@@ -63,50 +63,6 @@ export default function PendingApprovalList() {
 
       if (updateError) {
         throw updateError;
-      }
-
-      const { error: notificationError } = await supabase.from('notifications').insert({
-        user_id: request.creator_id,
-        title: 'Solicitud Aprobada',
-        message: `Tu solicitud "${request.title}" ha sido aprobada`,
-        type: 'approved',
-        related_id: requestId,
-      });
-
-      if (notificationError) {
-        console.error('Error creating notification:', notificationError);
-      }
-
-      const { data: invitations } = await supabase
-        .from('request_invitations')
-        .select('supplier_id, supplier:suppliers(contact_email)')
-        .eq('request_id', requestId);
-
-      if (invitations && invitations.length > 0) {
-        const supplierNotifications = invitations.map((inv: any) => ({
-          user_id: inv.supplier_id,
-          title: 'Nueva Invitación',
-          message: `Has sido invitado a participar en "${request.title}"`,
-          type: 'invitation',
-          related_id: requestId,
-        }));
-
-        const { error: supplierNotifError } = await supabase
-          .from('notifications')
-          .insert(supplierNotifications);
-
-        if (supplierNotifError) {
-          console.error('Error creating supplier notifications:', supplierNotifError);
-        }
-
-        const { error: invUpdateError } = await supabase
-          .from('request_invitations')
-          .update({ notified_at: new Date().toISOString() })
-          .eq('request_id', requestId);
-
-        if (invUpdateError) {
-          console.error('Error updating invitation timestamps:', invUpdateError);
-        }
       }
 
       alert('Solicitud aprobada exitosamente');

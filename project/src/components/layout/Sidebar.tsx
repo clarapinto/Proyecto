@@ -7,11 +7,11 @@ import {
   Users,
   Settings,
   LogOut,
-  Bell,
   ShoppingBag
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
+import { NotificationBell } from '../shared/NotificationBell';
 
 interface SidebarProps {
   currentView: string;
@@ -20,7 +20,6 @@ interface SidebarProps {
 
 export default function Sidebar({ currentView, onViewChange }: SidebarProps) {
   const { profile, signOut } = useAuth();
-  const [unreadCount] = useState(3);
   const [pendingAwardsCount, setPendingAwardsCount] = useState(0);
   const [pendingApprovalsCount, setPendingApprovalsCount] = useState(0);
 
@@ -170,20 +169,9 @@ export default function Sidebar({ currentView, onViewChange }: SidebarProps) {
       </div>
 
       <div className="border-t border-secondary-200/60 p-4 bg-secondary-50/30">
-        <button
-          onClick={() => onViewChange('notifications')}
-          className="w-full flex items-center justify-between px-3 py-2.5 mb-3 rounded-lg text-secondary-700 hover:bg-white hover:shadow-sm transition-all duration-200"
-        >
-          <div className="flex items-center gap-3">
-            <Bell className="w-5 h-5" />
-            <span className="text-sm font-medium">Notificaciones</span>
-          </div>
-          {unreadCount > 0 && (
-            <span className="bg-accent-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-sm">
-              {unreadCount}
-            </span>
-          )}
-        </button>
+        <div className="mb-3 flex justify-center">
+          <NotificationBell />
+        </div>
 
         <div className="px-3 py-3 mb-3 bg-white rounded-lg border border-secondary-200/60 shadow-sm">
           <p className="text-sm font-semibold text-secondary-900 truncate">{profile?.full_name}</p>
